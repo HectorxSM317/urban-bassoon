@@ -1,11 +1,14 @@
-const employeesControllers = require('../controllers/employeesControllers')
+
 const router = require('express').Router()
+const { employeeRouter } = require('./employee.routes')
+const { userRouter } = require('./users.routes')
+const { vacationsRouter } = require('./vacations.routes')
 
 
 
-router.get('/employee', employeesControllers.getEmployees)
-router.post('/employee/create', employeesControllers.createEmployee)
-router.post('/employee/delete/:id', employeesControllers.deleteEmployee)
-router.post('/employee/modify/:id', employeesControllers.modifyEmployee)
+router.use('/employee', employeeRouter)
+router.use('/user', userRouter)
+router.use('/vacations', vacationsRouter)
+
 
 module.exports = router
