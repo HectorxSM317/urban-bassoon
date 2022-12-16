@@ -2,7 +2,6 @@ const Vacations = require('../models/Vacations')
 
 const vacationsServices = {
     vacationsRequest: async({ id, dateStart, dateEnd }) => {
-        console.log(id, dateStart, dateEnd)
         // const request = Vacations.create({
         //     dateStart,
         //     dateEnd,

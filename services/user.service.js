@@ -8,7 +8,6 @@ const userServices = {
     const user = await User.findOne({ where: { email } });
     if (user) throw new Error("El usuario ya existe");
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("hash", hashedPassword);
     return await User.create({
       email,
       password: hashedPassword,
@@ -25,7 +24,7 @@ const userServices = {
       email: userExists.email,
       role: userExists.role,
     };
-    const token = sign({ id: userData.id }, environments.SECRET_KEY, {
+    const token = sign(userData , environments.SECRET_KEY, {
       expiresIn: "7d",
     });
     return { userData, token };
@@ -34,15 +33,14 @@ const userServices = {
     return await User.destroy({ where: { id } });
   },
   loginToken: async (user) => {
-    const token = sign({ id: user.id }, environments.SECRET_KEY, {
+    const token = sign(user.dataValues, environments.SECRET_KEY, {
       expiresIn: "7d",
     });
     const userData = {
-      id: userExists.id,
-      email: userExists.email,
-      role: userExists.role,
-    };
-
+      id: user.dataValues.id,
+      email: user.dataValues.email,
+      role: user.dataValues.role,
+    }
     return { userData, token }
   },
 };

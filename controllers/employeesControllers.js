@@ -13,7 +13,6 @@ const employeesControllers = {
     },
 
     createEmployee: async (req, res) => {
-        console.log("req",req.body)
         try {
             const employee = await Employee.create({
                 firstName: req.body.firstName,
@@ -42,7 +41,6 @@ const employeesControllers = {
     },
 
     modifyEmployee: async(req, res) => {
-        console.log("up",req.body)
         try {
             const employee = await Employee.upsert({ 
                 id : req.params.id,

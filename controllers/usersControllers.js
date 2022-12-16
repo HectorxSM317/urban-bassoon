@@ -3,7 +3,6 @@ const userServices = require("../services/user.service");
 const usersControllers = {
   register: async (req, res) => {
     const { email, password, role } = req.body;
-    console.log(email, password, role);
     try {
       const user = await userServices.register({ email, password, role });
       res.json(user);
