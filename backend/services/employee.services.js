@@ -5,7 +5,7 @@ const employeeServices = {
        return await Employee.findAll()
     },
     createEmployee: async(employee) => {
-        const employee = await Employee.create({
+        const newEmployee = await Employee.create({
             firstName: employee.firstName,
             lastName: employee.lastName,
             rut: employee.rut,
@@ -15,8 +15,8 @@ const employeeServices = {
             sex: employee.sex,
             position: employee.position
         })
-        if(!employee) throw new Error('No se pudo crear el empleado')
-        return employee
+        if(!newEmployee) throw new Error('No se pudo crear el empleado')
+        return newEmployee
     },
     deleteEmployee: async(id) => {
         return await Employee.destroy({ where: {id}})

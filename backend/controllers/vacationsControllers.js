@@ -1,4 +1,4 @@
-const vacationsServices = require("../services/vacations.service")
+const vacationsServices = require("../services/vacations.services")
 
 
 const vacationsControllers = {
