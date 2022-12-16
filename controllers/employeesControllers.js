@@ -1,11 +1,10 @@
-const Employee = require('../models/Employee')
+const employeeServices = require("../services/employee.services")
 
 const employeesControllers = {
     getEmployees: async (req, res) => {
         try {
-            const employees = await Employee.findAll()
+            const employees = await employeeServices.getEmployees()
             res.json(employees)
-            
         } catch (error) {
             res.status(500).json({ error: error.message})
         }
@@ -14,17 +13,7 @@ const employeesControllers = {
 
     createEmployee: async (req, res) => {
         try {
-            const employee = await Employee.create({
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                rut: req.body.rut,
-                dateBirth: req.body.dateBirth,
-                email: req.body.email,
-                phone: req.body.phone,
-                sex: req.body.sex,
-                position: req.body.position
-            })
-            if(!employee) throw new Error('No se pudo crear el empleado')
+            const employee = await employeeServices.createEmployee(req.body)
             res.json(employee)
         } catch (error) {
             res.status(500).json({ error: error.message })
@@ -33,7 +22,7 @@ const employeesControllers = {
 
     deleteEmployee: async (req, res) => {
         try {
-            const employee = Employee.destroy({ where: {id : req.params.id}})
+            const employee = employeeServices.deleteEmployee(req.params.id)
             res.json( employee )
         } catch (error) {
             res.status(500).json({ error: error.message })
@@ -42,18 +31,7 @@ const employeesControllers = {
 
     modifyEmployee: async(req, res) => {
         try {
-            const employee = await Employee.upsert({ 
-                id : req.params.id,
-                firstName : req.body.firstName || employee.firstName,
-                lastName : req.body.lastName || employee.lastName,
-                rut : req.body.rut || employee.rut,
-                dateBirth : req.body.dateBirth || employee.dateBirth,
-                email : req.body.email || employee.email,
-                phone : req.body.phone || employee.phone,
-                sex : req.body.sex || employee.sex,
-                position : req.body.sex || employee.position,
-                
-            })
+            const employee = await employeeServices.modifyEmployee(req.params.id, req.body)
             res.json(employee)
         } catch (error) {
             res.status(500).json({ error: error.message })
